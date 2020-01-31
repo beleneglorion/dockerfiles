@@ -4,9 +4,10 @@ SHELL=/bin/sh
 ifndef VERBOSE
 .SILENT:
 endif
-
+COLOR_COMMENT=\033[0;32m
 IMAGE_PATH=beleneglorion/docker-tools
-VERSION=1.0
+VERSION=latest
+IMAGE=${IMAGE_PATH}:${VERSION}
 
 ## Help
 help:
@@ -28,12 +29,9 @@ all: build push_image
 
 ## build image and tags it
 build: Dockerfile
-	docker build -f Dockerfile . -t ${IMAGE_PATH}:${VERSION}
-
-## login on registry
-registry_login:
-	docker login
+	docker build -f Dockerfile . -t ${IMAGE}
 
 ## push image
-push_image: registry_login
-	docker push {IMAGE_PATH}:${VERSION}
+push_image:
+	docker push ${IMAGE}
+
