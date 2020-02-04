@@ -7,6 +7,7 @@ RUN \
     git \
     bash \
     coreutils \
+    gettext \
     grep \
     && git clone https://github.com/beleneglorion/git-semver.git && \
     /bin/bash git-semver/install.sh
