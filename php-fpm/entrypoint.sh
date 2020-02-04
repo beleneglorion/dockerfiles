@@ -16,27 +16,21 @@ function beforeStart () {
 if [ "enabled" == "$APP_XDEBUG" ]; then
     # Enable xdebug
     ln -sf /xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-    echo 'Xdebug  is enabled'
 else
     # Disable xdebug
     if [ -e /usr/local/etc/php/conf.d/xdebug.ini ]; then
         rm -f /usr/local/etc/php/conf.d/xdebug.ini
     fi
-    echo 'Xdebug  is disabled'
 fi
 
 if [ $uid == 0 ] && [ $gid == 0 ]; then
     if [ $# -eq 0 ]; then
         beforeStart
-    	chmod -R 777 /srv/var
         php-fpm --allow-to-run-as-root
     else
-        echo "$@"
         exec "$@"
     fi
 fi
-
-echo 'Environnement is :'$APP_ENV
 sed -i -r "s/foo:x:\d+:\d+:/foo:x:$uid:$gid:/g" /etc/passwd
 sed -i -r "s/bar:x:\d+:/bar:x:$gid:/g" /etc/group
 
@@ -47,11 +41,8 @@ user=$(grep ":x:$uid:" /etc/passwd | cut -d: -f1)
 
 
 if [ $# -eq 0 ]; then
-	beforeStart
-	chown -R $user /srv/var
-    chmod -R 777 /srv/var
+	 beforeStart
     php-fpm
 else
-    echo gosu $user "$@"
     exec gosu $user "$@"
 fi
