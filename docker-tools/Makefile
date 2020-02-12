@@ -5,12 +5,16 @@ ifndef VERBOSE
 .SILENT:
 endif
 COLOR_COMMENT=\033[0;32m
+COLOR_INFO=\033[0;33m
+COLOR_RESET=\033[0m
+
 IMAGE_PATH=beleneglorion/docker-tools
 VERSION=latest
 IMAGE=${IMAGE_PATH}:${VERSION}
 
 ## Help
 help:
+	printf "\n"
 	printf "${COLOR_COMMENT}Usage:${COLOR_RESET}\n"
 	printf " make [target]\n\n"
 	printf "${COLOR_COMMENT}Available targets:${COLOR_RESET}\n"
@@ -23,6 +27,7 @@ help:
 		} \
 	} \
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
+	printf "\n"
 
 ## build and push image
 all: build push_image

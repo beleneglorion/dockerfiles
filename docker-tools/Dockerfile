@@ -11,3 +11,5 @@ RUN \
     grep \
     && git clone https://github.com/beleneglorion/git-semver.git && \
     /bin/bash git-semver/install.sh
+
+RUN apk --no-cache add perl
