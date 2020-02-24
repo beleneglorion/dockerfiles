@@ -11,7 +11,9 @@ RUN \
     grep \
     curl \
     perl \
-    && git clone https://github.com/beleneglorion/git-semver.git && \
-    /bin/bash git-semver/install.sh
+    gawk
 
-RUN   apk --no-cache add gawk
+ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
+
+RUN  git clone https://github.com/beleneglorion/git-semver.git && \
+    /bin/bash git-semver/install.sh
