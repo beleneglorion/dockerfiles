@@ -12,6 +12,7 @@ RUN \
     curl \
     perl \
     gawk
+RUN apk --no-cache add git-lfs
 
 ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
 

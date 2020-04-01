@@ -13,6 +13,8 @@ REGISTRY_DOMAIN=registry.gitlab.com
 VERSION=latest
 IMAGE=${REGISTRY_DOMAIN}${IMAGE_PATH}:${VERSION}
 
+.DEFAULT_GOAL := help
+
 ## Help
 help:
 	printf "\n"
