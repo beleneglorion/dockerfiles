@@ -8,9 +8,10 @@ COLOR_COMMENT=\033[0;32m
 COLOR_INFO=\033[0;33m
 COLOR_RESET=\033[0m
 
-IMAGE_PATH=beleneglorion/docker-tools
+IMAGE_PATH=/betd/public/docker/dockerfiles-tools
+REGISTRY_DOMAIN=registry.gitlab.com
 VERSION=latest
-IMAGE=${IMAGE_PATH}:${VERSION}
+IMAGE=${REGISTRY_DOMAIN}${IMAGE_PATH}:${VERSION}
 
 ## Help
 help:
