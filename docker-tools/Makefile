@@ -4,12 +4,20 @@ SHELL=/bin/sh
 ifndef VERBOSE
 .SILENT:
 endif
+COLOR_COMMENT=\033[0;32m
+COLOR_INFO=\033[0;33m
+COLOR_RESET=\033[0m
 
-IMAGE_PATH=beleneglorion/docker-tools
-VERSION=1.0
+IMAGE_PATH=/betd/public/docker/dockerfiles-tools
+REGISTRY_DOMAIN=registry.gitlab.com
+VERSION=latest
+IMAGE=${REGISTRY_DOMAIN}${IMAGE_PATH}:${VERSION}
+
+.DEFAULT_GOAL := help
 
 ## Help
 help:
+	printf "\n"
 	printf "${COLOR_COMMENT}Usage:${COLOR_RESET}\n"
 	printf " make [target]\n\n"
 	printf "${COLOR_COMMENT}Available targets:${COLOR_RESET}\n"
@@ -22,18 +30,16 @@ help:
 		} \
 	} \
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
+	printf "\n"
 
 ## build and push image
 all: build push_image
 
 ## build image and tags it
 build: Dockerfile
-	docker build -f Dockerfile . -t ${IMAGE_PATH}:${VERSION}
-
-## login on registry
-registry_login:
-	docker login
+	docker build -f Dockerfile . -t ${IMAGE}
 
 ## push image
-push_image: registry_login
-	docker push {IMAGE_PATH}:${VERSION}
+push_image:
+	docker push ${IMAGE}
+
