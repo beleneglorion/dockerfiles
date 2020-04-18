@@ -56,6 +56,17 @@ RUN apk add --no-cache \
     addgroup bar && \
     adduser -D -h /home -s /bin/sh -G bar foo
 
+ENV REDIS_VERSION 5.2.0
+
+RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$REDIS_VERSION.tar.gz \
+    && tar xfz /tmp/redis.tar.gz \
+    && rm -r /tmp/redis.tar.gz \
+    && mkdir -p /usr/src/php/ext \
+    && mv phpredis-* /usr/src/php/ext/redis \
+    && docker-php-ext-install redis \
+    && docker-php-ext-enable redis
+
+
 ADD entrypoint.sh /entrypoint
 RUN chmod +x /entrypoint
 WORKDIR /srv
