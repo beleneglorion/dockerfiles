@@ -1,0 +1,20 @@
+variables:
+  REGISTRY_DOMAIN: registry.gitlab.com
+  IMAGE_NAME: ${REGISTRY_DOMAIN}/${CI_PROJECT_PATH}:${CI_COMMIT_REF_NAME}
+  DOCKER_DRIVER: overlay2
+
+image: mykiwi/docker
+services:
+  - docker:dind
+
+
+
+stages:
+  - build
+
+build:
+  stage: build
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+    - docker build . -t ${IMAGE_NAME}
+    - docker push ${IMAGE_NAME}
